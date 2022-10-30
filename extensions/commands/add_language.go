@@ -13,7 +13,7 @@ import (
 
 var languageName string
 
-var RequestNewLanguageData = utils.SlashCommandData{
+var AddLanguageData = utils.SlashCommandData{
 	Name:        "add_language",
 	Description: "Performs a request to add a new language to the voting section",
 	Options: []*disgord.ApplicationCommandOption{
@@ -23,16 +23,10 @@ var RequestNewLanguageData = utils.SlashCommandData{
 			Type:        disgord.OptionTypeString,
 			Required:    true,
 		},
-		{
-			Name:        "url",
-			Description: "URL to the logo of the language",
-			Type:        disgord.OptionTypeString,
-			Required:    true,
-		},
 	},
 }
 
-func RequestNewLanguageHandler(session disgord.Session, interaction *disgord.InteractionCreate) {
+func AddLanguageHandler(session disgord.Session, interaction *disgord.InteractionCreate) {
 	languageName = interaction.Data.Options[0].Value.(string)
 
 	foundLanguage := models.Language{}
@@ -115,7 +109,6 @@ func AddLanguageButtonHandler(session disgord.Session, interaction *disgord.Inte
 	database.Client.Create(&models.Language{
 		Name:  languageName,
 		Votes: 0,
-		Emoji: fmt.Sprintf(":%s:", languageName),
 	})
 
 	requestsChannelId := disgord.ParseSnowflakeString(utils.GetEnv("REQUESTS_CHANNEL_ID"))

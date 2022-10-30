@@ -6,7 +6,11 @@ import (
 
 var SlashCommands = utils.SlashCommands{
 	{
-		Data:    RequestNewLanguageData,
-		Handler: RequestNewLanguageHandler,
+		Data:    AddLanguageData,
+		Handler: AddLanguageHandler,
+	},
+	{
+		Data:    VoteData,
+		Handler: VoteHandler,
 	},
 }

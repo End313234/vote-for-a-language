@@ -11,7 +11,7 @@ import (
 
 func BotReady(client *disgord.Client) func() {
 	return func() {
-		for id, command := range commands.SlashCommands {
+		for _, command := range commands.SlashCommands {
 			slashCommand := &disgord.CreateApplicationCommand{
 				Name:              command.Data.Name,
 				Description:       command.Data.Description,
@@ -20,11 +20,10 @@ func BotReady(client *disgord.Client) func() {
 				DefaultPermission: command.Data.DefaultPermission,
 			}
 
-			slashCommandId, _ := disgord.GetSnowflake(id)
 			devGuildId, _ := disgord.GetSnowflake(utils.GetEnv("DEV_GUILD_ID"))
 			environment := utils.GetEnv("ENVIRONMENT")
 
-			applicationCommand := client.ApplicationCommand(slashCommandId)
+			applicationCommand := client.ApplicationCommand(disgord.Snowflake(0))
 
 			if environment == "development" {
 				if err := applicationCommand.Guild(devGuildId).Create(slashCommand); err != nil {
