@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"vote-for-a-language/database"
+	"vote-for-a-language/extensions/events"
 	"vote-for-a-language/utils"
 
 	"github.com/andersfylling/disgord"
@@ -17,7 +17,6 @@ func main() {
 
 	database.Connect()
 
-	client.Gateway().BotReady(func() {
-		fmt.Println("Bot is ready to Go!")
-	})
+	client.Gateway().BotReady(events.BotReady(client))
+	client.Gateway().InteractionCreate(events.InteractionCreate)
 }

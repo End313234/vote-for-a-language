@@ -1,6 +1,7 @@
 package database
 
 import (
+	"vote-for-a-language/database/models"
 	"vote-for-a-language/utils"
 
 	"gorm.io/driver/sqlite"
@@ -14,6 +15,8 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
+
+	db.AutoMigrate(&models.Language{})
 
 	Client = db
 }
