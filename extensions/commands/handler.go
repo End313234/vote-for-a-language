@@ -13,4 +13,8 @@ var SlashCommands = utils.SlashCommands{
 		Data:    VoteData,
 		Handler: VoteHandler,
 	},
+	{
+		Data:    InviteData,
+		Handler: InviteHandler,
+	},
 }
