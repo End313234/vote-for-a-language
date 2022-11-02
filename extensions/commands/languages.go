@@ -24,7 +24,7 @@ func LanguagesHandler(session disgord.Session, interaction *disgord.InteractionC
 
 	embedDescription := ""
 	for _, lang := range languages {
-		embedDescription += fmt.Sprintf("**%s**\n", cases.Title(language.AmericanEnglish).String(lang.Name))
+		embedDescription += fmt.Sprintf("<:%s:%s> %s\n", lang.Name, lang.EmojiId, cases.Title(language.AmericanEnglish).String(lang.Name))
 	}
 
 	interaction.Reply(context.Background(), session, &disgord.CreateInteractionResponse{
