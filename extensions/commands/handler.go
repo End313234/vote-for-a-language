@@ -17,4 +17,8 @@ var SlashCommands = utils.SlashCommands{
 		Data:    InviteData,
 		Handler: InviteHandler,
 	},
+	{
+		Data:    LanguagesData,
+		Handler: LanguagesHandler,
+	},
 }
