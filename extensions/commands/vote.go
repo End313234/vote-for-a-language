@@ -20,6 +20,7 @@ var VoteData = utils.SlashCommandData{
 			Required:    true,
 		},
 	},
+	RateLimit: 5000,
 }
 
 func VoteHandler(session disgord.Session, interaction *disgord.InteractionCreate) {

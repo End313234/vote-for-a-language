@@ -24,6 +24,7 @@ var AddLanguageData = utils.SlashCommandData{
 			Required:    true,
 		},
 	},
+	RateLimit: 10000,
 }
 
 func AddLanguageHandler(session disgord.Session, interaction *disgord.InteractionCreate) {

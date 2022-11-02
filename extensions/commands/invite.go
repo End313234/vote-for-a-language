@@ -12,6 +12,7 @@ var InviteData = utils.SlashCommandData{
 	Name:        "invite",
 	Description: "Returns the invite of the bot",
 	Type:        disgord.ApplicationCommandChatInput,
+	RateLimit:   5000,
 }
 
 func InviteHandler(session disgord.Session, interaction *disgord.InteractionCreate) {

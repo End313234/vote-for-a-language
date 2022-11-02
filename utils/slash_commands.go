@@ -9,6 +9,7 @@ type SlashCommandData struct {
 	Description       string
 	Options           []*disgord.ApplicationCommandOption
 	DefaultPermission bool
+	RateLimit         int
 }
 
 type SlashCommand struct {
@@ -26,4 +27,14 @@ func (sc SlashCommands) FindByName(name string) SlashCommand {
 	}
 
 	return SlashCommand{}
+}
+
+func (sc SlashCommands) CollectRateLimits() map[string]int {
+	rateLimits := map[string]int{}
+
+	for _, c := range sc {
+		rateLimits[c.Data.Name] = c.Data.RateLimit
+	}
+
+	return rateLimits
 }
