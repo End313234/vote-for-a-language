@@ -2,7 +2,7 @@ package commands
 
 import (
 	"context"
-	"fmt"
+	"time"
 	"vote-for-a-language/database"
 	"vote-for-a-language/database/models"
 	"vote-for-a-language/extensions/components"
@@ -61,7 +61,7 @@ func AddLanguageHandler(session disgord.Session, interaction *disgord.Interactio
 
 	components.Buttons.Add(utils.Button{
 		Data:    *buttons[0],
-		Handler: AddLanguageButtonHandler,
+		Handler: addLanguageButtonHandler,
 	})
 
 	requestsChannelId := disgord.ParseSnowflakeString(utils.GetEnv("REQUESTS_CHANNEL_ID"))
@@ -106,30 +106,43 @@ func AddLanguageHandler(session disgord.Session, interaction *disgord.Interactio
 	})
 }
 
-func AddLanguageButtonHandler(session disgord.Session, interaction *disgord.InteractionCreate) {
-	database.Client.Create(&models.Language{
-		Name:  languageName,
-		Votes: 0,
-	})
-
-	requestsChannelId := disgord.ParseSnowflakeString(utils.GetEnv("REQUESTS_CHANNEL_ID"))
-	session.Channel(requestsChannelId).Message(interaction.Message.ID).Update(&disgord.UpdateMessage{
-		Embeds: &[]*disgord.Embed{
-			{
-				Description: fmt.Sprintf("The language **%s** has been added successfully!", languageName),
-				Color:       0x40FB6F,
-			},
-		},
-		Components: &[]*disgord.MessageComponent{},
+func addLanguageButtonHandler(session disgord.Session, interaction *disgord.InteractionCreate) {
+	interaction.Reply(context.Background(), session, &disgord.CreateInteractionResponse{
+		Type: disgord.InteractionCallbackDeferredUpdateMessage,
 	})
 
 	interaction.Edit(context.Background(), session, &disgord.Message{
 		Embeds: []*disgord.Embed{
 			{
-				Description: fmt.Sprintf("The language **%s** has been added successfully!", languageName),
+				Description: "Send the emoji ID in the chat",
 				Color:       0x40FB6F,
 			},
 		},
 		Components: []*disgord.MessageComponent{},
+	})
+
+	session.Gateway().WithCtrl(&disgord.Ctrl{
+		Runs:     1,
+		Duration: time.Minute,
+	}).MessageCreate(func(s disgord.Session, h *disgord.MessageCreate) {
+		msg := h.Message
+
+		if msg.Author.ID != interaction.Member.UserID || msg.ChannelID != interaction.ChannelID {
+			return
+		}
+
+		database.Client.Create(&models.Language{
+			Name:    languageName,
+			Votes:   0,
+			EmojiId: msg.Content,
+		})
+
+		msg.Reply(context.Background(), session, &disgord.Message{
+			Embeds: []*disgord.Embed{
+				{
+					Description: msg.Content,
+				},
+			},
+		})
 	})
 }
