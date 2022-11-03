@@ -2,6 +2,7 @@ package commands
 
 import (
 	"context"
+	"fmt"
 	"time"
 	"vote-for-a-language/database"
 	"vote-for-a-language/database/models"
@@ -115,7 +116,7 @@ func addLanguageButtonHandler(session disgord.Session, interaction *disgord.Inte
 		Embeds: []*disgord.Embed{
 			{
 				Description: "Send the emoji ID in the chat",
-				Color:       0x40FB6F,
+				Color:       0xFBE24B,
 			},
 		},
 		Components: []*disgord.MessageComponent{},
@@ -137,10 +138,13 @@ func addLanguageButtonHandler(session disgord.Session, interaction *disgord.Inte
 			EmojiId: msg.Content,
 		})
 
-		msg.Reply(context.Background(), session, &disgord.Message{
-			Embeds: []*disgord.Embed{
+		requestsChannelId := disgord.ParseSnowflakeString(utils.GetEnv("REQUESTS_CHANNEL_ID"))
+
+		session.Channel(requestsChannelId).Message(msg.ID).Update(&disgord.UpdateMessage{
+			Embeds: &[]*disgord.Embed{
 				{
-					Description: msg.Content,
+					Description: fmt.Sprintf("The language **%s** has been added successfully!", languageName),
+					Color:       0x40FB6F,
 				},
 			},
 		})
