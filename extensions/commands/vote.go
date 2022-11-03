@@ -2,6 +2,7 @@ package commands
 
 import (
 	"context"
+	"vote-for-a-language/constants"
 	"vote-for-a-language/database"
 	"vote-for-a-language/database/models"
 	"vote-for-a-language/utils"
@@ -24,8 +25,9 @@ var VoteData = utils.SlashCommandData{
 }
 
 func VoteHandler(session disgord.Session, interaction *disgord.InteractionCreate) {
+	languageName = interaction.Data.Options[0].Value.(string)
 	foundLanguage := models.Language{}
-	database.Client.Where("name = ?", languageName).Find(&foundLanguage)
+	database.Client.Where("name = ?", constants.EnglishLowerCase.String(languageName)).Find(&foundLanguage)
 
 	if foundLanguage.Name == "" {
 		interaction.Reply(context.Background(), session, &disgord.CreateInteractionResponse{
@@ -35,7 +37,7 @@ func VoteHandler(session disgord.Session, interaction *disgord.InteractionCreate
 				Embeds: []*disgord.Embed{
 					{
 						Description: "This language does not exist!",
-						Color:       0xFB1D2C,
+						Color:       constants.RED_COLOR,
 					},
 				},
 			},
@@ -54,7 +56,7 @@ func VoteHandler(session disgord.Session, interaction *disgord.InteractionCreate
 			Embeds: []*disgord.Embed{
 				{
 					Description: "Your vote has been registered successfully!",
-					Color:       0x40FB6F,
+					Color:       constants.GREEN_COLOR,
 				},
 			},
 		},

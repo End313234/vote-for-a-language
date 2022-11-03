@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 	"vote-for-a-language/config"
+	"vote-for-a-language/constants"
 	"vote-for-a-language/extensions/commands"
 	"vote-for-a-language/extensions/components"
 
@@ -34,7 +35,7 @@ func InteractionCreate(session disgord.Session, interaction *disgord.Interaction
 					Embeds: []*disgord.Embed{
 						{
 							Description: fmt.Sprintf("You have just been rate limited! Wait %ss to use this command again!", formattedWaitLine),
-							Color:       0xFB1D2C,
+							Color:       constants.RED_COLOR,
 						},
 					},
 				},

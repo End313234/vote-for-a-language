@@ -3,6 +3,7 @@ package commands
 import (
 	"context"
 	"fmt"
+	"vote-for-a-language/constants"
 	"vote-for-a-language/utils"
 
 	"github.com/andersfylling/disgord"
@@ -22,7 +23,7 @@ func InviteHandler(session disgord.Session, interaction *disgord.InteractionCrea
 			Embeds: []*disgord.Embed{
 				{
 					Description: fmt.Sprintf("Invite me using [this link](%s)!", utils.GetEnv("INVITE_LINK")),
-					Color:       0x40FB6F,
+					Color:       constants.GREEN_COLOR,
 				},
 			},
 		},

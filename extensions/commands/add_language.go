@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"time"
+	"vote-for-a-language/constants"
 	"vote-for-a-language/database"
 	"vote-for-a-language/database/models"
 	"vote-for-a-language/extensions/components"
@@ -42,7 +43,7 @@ func AddLanguageHandler(session disgord.Session, interaction *disgord.Interactio
 				Embeds: []*disgord.Embed{
 					{
 						Description: "This language already exists!",
-						Color:       0xFB1D2C,
+						Color:       constants.RED_COLOR,
 					},
 				},
 			},
@@ -100,7 +101,7 @@ func AddLanguageHandler(session disgord.Session, interaction *disgord.Interactio
 			Embeds: []*disgord.Embed{
 				{
 					Description: "Your request has been performed successfully!",
-					Color:       0x40FB6F,
+					Color:       constants.GREEN_COLOR,
 				},
 			},
 		},
@@ -116,7 +117,7 @@ func addLanguageButtonHandler(session disgord.Session, interaction *disgord.Inte
 		Embeds: []*disgord.Embed{
 			{
 				Description: "Send the emoji ID in the chat",
-				Color:       0xFBE24B,
+				Color:       constants.YELLOW_COLOR,
 			},
 		},
 		Components: []*disgord.MessageComponent{},
@@ -144,7 +145,7 @@ func addLanguageButtonHandler(session disgord.Session, interaction *disgord.Inte
 			Embeds: &[]*disgord.Embed{
 				{
 					Description: fmt.Sprintf("The language **%s** has been added successfully!", languageName),
-					Color:       0x40FB6F,
+					Color:       constants.GREEN_COLOR,
 				},
 			},
 		})

@@ -3,13 +3,12 @@ package commands
 import (
 	"context"
 	"fmt"
+	"vote-for-a-language/constants"
 	"vote-for-a-language/database"
 	"vote-for-a-language/database/models"
 	"vote-for-a-language/utils"
 
 	"github.com/andersfylling/disgord"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 var LanguagesData = utils.SlashCommandData{
@@ -24,7 +23,7 @@ func LanguagesHandler(session disgord.Session, interaction *disgord.InteractionC
 
 	embedDescription := ""
 	for _, lang := range languages {
-		embedDescription += fmt.Sprintf("<:%s:%s> %s\n", lang.Name, lang.EmojiId, cases.Title(language.AmericanEnglish).String(lang.Name))
+		embedDescription += fmt.Sprintf("<:%s:%s> %s\n", lang.Name, lang.EmojiId, constants.EnglishTitleCase.String(lang.Name))
 	}
 
 	interaction.Reply(context.Background(), session, &disgord.CreateInteractionResponse{
@@ -34,7 +33,7 @@ func LanguagesHandler(session disgord.Session, interaction *disgord.InteractionC
 				{
 					Title:       "Available languages",
 					Description: embedDescription,
-					Color:       0x40FB6F,
+					Color:       constants.GREEN_COLOR,
 				},
 			},
 		},
