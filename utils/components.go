@@ -9,8 +9,10 @@ type Button struct {
 
 type Buttons []Button
 
-func (b *Buttons) Add(button Button) {
-	*b = append(*b, button)
+func (b *Buttons) Add(buttons ...Button) {
+	for _, button := range buttons {
+		*b = append(*b, button)
+	}
 }
 
 func (b Buttons) FindByCustomId(customId string) Button {

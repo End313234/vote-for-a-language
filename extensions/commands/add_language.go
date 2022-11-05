@@ -81,15 +81,8 @@ func AddLanguageHandler(session disgord.Session, interaction *disgord.Interactio
 		},
 		Components: []*disgord.MessageComponent{
 			{
-				Type: disgord.MessageComponentActionRow,
-				Components: []*disgord.MessageComponent{
-					{
-						Type:     disgord.MessageComponentButton,
-						Label:    "Add",
-						Style:    disgord.Success,
-						CustomID: "add-language",
-					},
-				},
+				Type:       disgord.MessageComponentActionRow,
+				Components: buttons,
 			},
 		},
 	})
