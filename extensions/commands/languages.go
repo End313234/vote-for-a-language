@@ -40,7 +40,7 @@ func LanguagesHandler(session disgord.Session, interaction *disgord.InteractionC
 	for q := 0; q < quantityOfEmbeds; q++ {
 		description := ""
 		for _, lang := range languagesInChunks[q] {
-			description += fmt.Sprintf("<:%s:%s> %s - **%d**\n", lang.Name, lang.EmojiId, constants.EnglishTitleCase.String(lang.Name), lang.Votes)
+			description += fmt.Sprintf("<:%s:%s> %s - **%d**\n", lang.Name, lang.EmojiId, utils.UpperCaseFirstLetter(lang.Name), lang.Votes)
 		}
 
 		embeds = append(embeds, &disgord.Embed{

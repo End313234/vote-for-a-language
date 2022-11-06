@@ -1,4 +1,4 @@
-package constants
+package utils
 
 import (
 	"golang.org/x/text/cases"
@@ -6,4 +6,3 @@ import (
 )
 
 var EnglishLowerCase = cases.Lower(language.AmericanEnglish)
-var EnglishTitleCase = cases.Title(language.AmericanEnglish)

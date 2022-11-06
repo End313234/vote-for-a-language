@@ -27,7 +27,7 @@ var VoteData = utils.SlashCommandData{
 func VoteHandler(session disgord.Session, interaction *disgord.InteractionCreate) {
 	languageName = interaction.Data.Options[0].Value.(string)
 	foundLanguage := models.Language{}
-	database.Client.Where("name = ?", constants.EnglishLowerCase.String(languageName)).Find(&foundLanguage)
+	database.Client.Where("lower(name) = ?", utils.EnglishLowerCase.String(languageName)).Find(&foundLanguage)
 
 	if foundLanguage.Name == "" {
 		interaction.Reply(context.Background(), session, &disgord.CreateInteractionResponse{
